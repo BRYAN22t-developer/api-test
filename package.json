@@ -9,7 +9,7 @@
   "scripts": {
     "build": "babel src -d lib",
     "test": "jest",
-    "start": "yarn run app.js"
+    "start": "yarn run app"
   },
   "devDependencies": {
     "eslint": "^10.0.2",
