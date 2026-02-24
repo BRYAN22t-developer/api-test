@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Probar API Rest</title>
+    <link rel="icon" href="data:," />
     <style>
       article {
         border: 1px solid #ccc;
@@ -18,7 +19,7 @@
       }
     </style>
     <script type="module">
-      fetch("http://localhost:3000/movies")
+      fetch("/api/movies")
         .then((res) => res.json())
         .then((movies) => {
           const html = movies
@@ -42,7 +43,7 @@
               const article = e.target.closest("article");
               const id = article.dataset.id;
 
-              fetch(`http://localhost:3000/movies/${id}`, {
+              fetch(`/api/movies/${id}`, {
                 method: "DELETE",
               }).then((res) => {
                 if (res.ok) {
