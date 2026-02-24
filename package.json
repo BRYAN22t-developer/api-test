@@ -7,9 +7,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "babel src -d lib",
-    "test": "jest",
-    "start": "yarn run app"
+    "build": "npm install",
+    "start": "node app.js"
   },
   "devDependencies": {
     "eslint": "^10.0.2",
