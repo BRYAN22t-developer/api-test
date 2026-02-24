@@ -24,33 +24,12 @@
       }
     </style>
     <script type="module">
-      const API_BASES = ["/api", "/.netlify/functions/api"];
-
-      async function fetchFromApi(path, options = {}) {
-        for (const base of API_BASES) {
-          const response = await fetch(`${base}${path}`, options);
-
-          if (response.ok) {
-            return response;
-          }
-
-          if (response.status !== 404) {
-            throw new Error(`Request failed with status ${response.status}`);
-          }
-        }
-
-        throw new Error("Movies API route is not available.");
-      }
-
-      function renderError(message) {
-        document.querySelector("main").innerHTML =
-          `<p class="error">${message}</p>`;
-      }
-
-      function renderMovies(movies) {
-        const html = movies
-          .map((movie) => {
-            return `
+      fetch("/api/movies")
+        .then((res) => res.json())
+        .then((movies) => {
+          const html = movies
+            .map((movie) => {
+              return `
             <article data-id="${movie.id}">
               <h2>${movie.title}</h2>
               <img src="${movie.poster}" alt="${movie.title}">
@@ -59,43 +38,24 @@
               <button>eliminar</button>
             </article>
           `;
-          })
-          .join("");
+            })
+            .join("");
 
-        document.querySelector("main").innerHTML = html;
-      }
+          document.querySelector("main").innerHTML = html;
 
-      async function loadMovies() {
-        try {
-          const response = await fetchFromApi("/movies");
-          const contentType = response.headers.get("content-type") ?? "";
+          document.addEventListener("click", (e) => {
+            if (e.target.matches("button")) {
+              const article = e.target.closest("article");
+              const id = article.dataset.id;
 
-          if (!contentType.includes("application/json")) {
-            throw new Error("Unexpected non-JSON response");
-          }
-
-          const movies = await response.json();
-          renderMovies(movies);
-        } catch {
-          renderError("No se pudo cargar la lista de películas.");
-        }
-      }
-
-      document.addEventListener("click", async (e) => {
-        if (!e.target.matches("button")) {
-          return;
-        }
-
-        const article = e.target.closest("article");
-        const id = article?.dataset.id;
-
-        if (!id) {
-          return;
-        }
-
-        try {
-          await fetchFromApi(`/movies/${id}`, {
-            method: "DELETE",
+              fetch(`/api/movies/${id}`, {
+                method: "DELETE",
+              }).then((res) => {
+                if (res.ok) {
+                  article.remove();
+                }
+              });
+            }
           });
           article.remove();
         } catch {
