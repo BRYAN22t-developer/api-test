@@ -1,0 +1,49 @@
+### Recover info about movies
+GET http://localhost:3000/movies
+
+### Recover movie by id
+GET http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+
+### Recover all movies from a genre
+GET http://localhost:3000/movies?genre=ACTION
+
+### Recover all movies genres
+GET http://localhost:3000/movies/genres
+
+### Make a movie
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+    "title": "the godfather",
+    "year": 1975,
+    "director": "Francis Ford",
+    "duration": 175,
+    "poster": "https://img.fruugo.com/product/4/49/14441494_max.jpg",
+    "genre": [
+        "Crime",
+        "Drama"
+    ],
+    "rate": 6.7
+}
+
+### Make wrong movie
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+    "title": 24234,
+    "year": "1975",
+    "director": 234
+
+
+}
+
+### Update year
+
+PATCH http://localhost:3000/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+Content-Type: application/json
+
+{
+    "year": 1990
+}

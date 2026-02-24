@@ -1,0 +1,34 @@
+# Dependencias
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Variables de entorno
+.env
+.env.* 
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Cache / temporales
+.cache/
+.tmp/
+temp/
+
+# Coverage / testing
+coverage/
+
+# Build (si en el futuro compilas front)
+dist/
+build/
+
+# Netlify (si luego deployas ahí)
+.netlify/
+
+# VSCode (opcional)
+.vscode/
