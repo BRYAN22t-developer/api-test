@@ -1,11 +1,12 @@
 import express from "express";
-import movies from "./movies.json" with { type: "json" };
+import movies from "../../movies.json" with { type: "json" };
 import crypto from "node:crypto";
 import cors from "cors";
 import {
   validateMovie,
   validatePartialMovie,
-} from "./schemas/movies_schema.js";
+} from "../../schemas/movies_schema.js";
+import serverless from "serverless-http"
 
 const ACEPTED_ORIGINS = ["http://localhost:8080"];
 
@@ -14,7 +15,7 @@ app.disable("x-powered-by");
 
 app.use(express.json());
 app.use(
-  cors({
+  cors(/* {
     origin: (origin, callback) => {
       const ACCEPTED_ORIGINS = [
         "http://localhost:8080",
@@ -31,7 +32,7 @@ app.use(
 
       return callback(new Error("Not allowed by CORS"));
     },
-  }),
+  } */),
 );
 
 app.get("/", (req, res) => {
@@ -120,6 +121,4 @@ app.patch("/movies/:id", (req, res) => {
 
 const PORT = process.env.PORT ?? 3000;
 
-app.listen(PORT, () => {
-  console.log(`server listeng on server http://localhost:${PORT}`);
-});
+export const handler = serverless(app)
